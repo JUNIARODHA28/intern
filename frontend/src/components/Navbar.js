@@ -1,77 +1,71 @@
-// frontend/src/components/Navbar.js
-// This component provides the navigation bar for the application.
-// UPDATED: Added a profile icon with a dropdown menu showing user name and logout button.
-// NEW: Added a dedicated "Volunteer" dropdown menu with links to Dashboard, My Handled Requests, and Edit Profile.
-// NEW: Added a dedicated "Help Seeker" dropdown menu with links to Dashboard, My Requests, and Lodge Complaint.
-
-import React, { useState, useEffect, useRef } from 'react'; // Import useState, useEffect, and useRef
+import React, { useState, useEffect, useRef } from 'react'; 
 
 const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenRegisterModal, onOpenLoginModal }) => {
-  // State to control the visibility of the profile dropdown
+ 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  // State to control the visibility of the volunteer-specific dropdown
+ 
   const [showVolunteerDropdown, setShowVolunteerDropdown] = useState(false);
-  // NEW: State to control the visibility of the help-seeker-specific dropdown
+ 
   const [showHelpSeekerDropdown, setShowHelpSeekerDropdown] = useState(false);
 
-  // Refs for the dropdown containers to detect clicks outside
+ 
   const profileDropdownRef = useRef(null);
   const volunteerDropdownRef = useRef(null);
-  // NEW: Ref for help seeker dropdown
+
   const helpSeekerDropdownRef = useRef(null);
 
-  // Toggle dropdown visibility for profile
+
   const toggleProfileDropdown = () => {
     setShowProfileDropdown(prev => !prev);
-    // Close other dropdowns if open
+
     setShowVolunteerDropdown(false);
     setShowHelpSeekerDropdown(false);
   };
 
-  // Toggle dropdown visibility for volunteer specific menu
+  
   const toggleVolunteerDropdown = () => {
     setShowVolunteerDropdown(prev => !prev);
-    // Close other dropdowns if open
+    
     setShowProfileDropdown(false);
     setShowHelpSeekerDropdown(false);
   };
 
-  // NEW: Toggle dropdown visibility for help seeker specific menu
+  
   const toggleHelpSeekerDropdown = () => {
     setShowHelpSeekerDropdown(prev => !prev);
-    // Close other dropdowns if open
+
     setShowProfileDropdown(false);
     setShowVolunteerDropdown(false);
   };
 
 
-  // Close dropdowns if clicked outside
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Close profile dropdown
+ 
       if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
         setShowProfileDropdown(false);
       }
-      // Close volunteer dropdown
+ 
       if (volunteerDropdownRef.current && !volunteerDropdownRef.current.contains(event.target)) {
         setShowVolunteerDropdown(false);
       }
-      // NEW: Close help seeker dropdown
+    
       if (helpSeekerDropdownRef.current && !helpSeekerDropdownRef.current.contains(event.target)) {
         setShowHelpSeekerDropdown(false);
       }
     };
-    // Add event listener when component mounts
+   
     document.addEventListener('mousedown', handleClickOutside);
-    // Clean up event listener when component unmounts
+   
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []); // Empty dependency array means this effect runs once on mount and cleans up on unmount
+  }, []);
 
-  // Inline CSS Styles for Navbar
+
   const navbarStyle = {
-    backgroundColor: '#1a2b40', // Darker blue/indigo background
+    backgroundColor: '#1a2b40',
     padding: '1rem 0',
     color: '#ffffff',
     boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
@@ -85,14 +79,14 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 1.5rem',
-    flexWrap: 'wrap', // Allow wrapping on smaller screens
+    flexWrap: 'wrap',
   };
 
   const brandButtonStyle = {
     background: 'none',
     border: 'none',
     color: '#ffffff',
-    fontSize: '1.75rem', // text-2xl
+    fontSize: '1.75rem',
     fontWeight: 'bold',
     cursor: 'pointer',
     padding: '0.5rem 1rem',
@@ -100,7 +94,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
     transition: 'background-color 0.3s ease, transform 0.2s ease',
     textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
     ':hover': {
-      backgroundColor: '#2e4157', // Slightly lighter on hover
+      backgroundColor: '#2e4157',
       transform: 'scale(1.02)'
     }
   };
@@ -108,11 +102,11 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
   const navbarLinksStyle = {
     display: 'flex',
     alignItems: 'center',
-    gap: '1rem', // Space between links/buttons
-    flexWrap: 'wrap', // Allow links to wrap
-    justifyContent: 'flex-end', // Align to right
-    marginTop: '0', // Reset margin
-    '@media (max-width: 768px)': { // Responsive adjustments
+    gap: '1rem', 
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+    marginTop: '0', 
+    '@media (max-width: 768px)': { 
       width: '100%',
       justifyContent: 'center',
       marginTop: '1rem',
@@ -129,8 +123,8 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
     borderRadius: '0.375rem',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease, transform 0.2s ease',
-    textDecoration: 'none', // For button acting as link
-    whiteSpace: 'nowrap', // Prevent text wrap
+    textDecoration: 'none', 
+    whiteSpace: 'nowrap', 
     ':hover': {
       backgroundColor: '#2e4157',
       transform: 'translateY(-2px)'
@@ -138,7 +132,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
   };
 
   const logoutButtonStyle = {
-    backgroundColor: '#dc2626', // Red background for logout
+    backgroundColor: '#dc2626', 
     color: 'white',
     padding: '0.6rem 1.2rem',
     borderRadius: '0.375rem',
@@ -146,70 +140,70 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
     cursor: 'pointer',
     fontWeight: 'bold',
     transition: 'background-color 0.3s ease',
-    width: '100%', // Full width in dropdown
-    textAlign: 'left', // Align text to left
+    width: '100%',
+    textAlign: 'left',
     ':hover': {
-      backgroundColor: '#b91c1c', // Darker red on hover
-      transform: 'none' // No transform for dropdown item
+      backgroundColor: '#b91c1c',
+      transform: 'none'
     }
   };
 
-  // Profile icon button style
+ 
   const profileIconButtonStyle = {
     background: 'none',
     border: 'none',
     color: '#ffffff',
-    fontSize: '1.5rem', // Adjust size of icon
+    fontSize: '1.5rem', 
     cursor: 'pointer',
     padding: '0.5rem',
-    borderRadius: '50%', // Circular button
+    borderRadius: '50%',
     transition: 'background-color 0.3s ease',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '40px', // Fixed size for icon circle
+    width: '40px',
     height: '40px',
     ':hover': {
       backgroundColor: '#2e4157'
     }
   };
 
-  // Dropdown container style for all dropdowns
+ 
   const dropdownContainerStyle = {
-    position: 'relative', // For positioning the dropdown menu
-    marginLeft: '1rem' // Space from other navbar items
+    position: 'relative',
+    marginLeft: '1rem'
   };
 
-  // Dropdown menu style
+ 
   const dropdownMenuStyle = {
     position: 'absolute',
-    top: 'calc(100% + 0.5rem)', // Position below the button with some space
-    right: '0', // Align to the right of the button
-    backgroundColor: '#1a2b40', // Same as navbar background
+    top: 'calc(100% + 0.5rem)',
+    right: '0', 
+    backgroundColor: '#1a2b40',
     borderRadius: '0.375rem',
     boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
     padding: '0.5rem',
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.5rem', // Space between dropdown items
-    minWidth: '160px', // Minimum width for readability
-    zIndex: 1001 // Ensure dropdown is above other content
+    gap: '0.5rem',
+    minWidth: '160px',
+    zIndex: 1001 
   };
 
   const dropdownUsernameStyle = {
-    color: '#a3a3a3', // Lighter grey
+    color: '#a3a3a3',
     padding: '0.5rem 1rem',
     fontSize: '0.95rem',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis', // Add ellipsis for long names
-    borderBottom: '1px solid #2e4157', // Separator
+    textOverflow: 'ellipsis', 
+    borderBottom: '1px solid #2e4157',
     marginBottom: '0.5rem',
     paddingBottom: '0.5rem',
     fontWeight: 'bold'
   };
 
-  // Dropdown menu item button style
+  
   const dropdownItemButtonStyle = {
     background: 'none',
     border: 'none',
@@ -230,7 +224,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
   return (
     <nav style={navbarStyle}>
       <div style={navbarContainerStyle}>
-        {/* Brand/Logo - clicking takes to home page */}
+       
         <button
           onClick={() => setCurrentPage('home')}
           style={brandButtonStyle}
@@ -240,12 +234,12 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
          Kind Neighbour
         </button>
 
-        {/* Navigation links */}
+       
         <div style={navbarLinksStyle}>
-          {!token ? ( // If no token, show Register and Login
+          {!token ? (
             <>
               <button
-                onClick={onOpenRegisterModal} // Call modal open handler
+                onClick={onOpenRegisterModal} 
                 style={navLinkButtonStyle}
                 onMouseEnter={e => Object.assign(e.currentTarget.style, navLinkButtonStyle[':hover'])}
                 onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: navLinkButtonStyle.backgroundColor, transform: 'none' })}
@@ -253,7 +247,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
                 Register
               </button>
               <button
-                onClick={onOpenLoginModal} // Call modal open handler
+                onClick={onOpenLoginModal}
                 style={navLinkButtonStyle}
                 onMouseEnter={e => Object.assign(e.currentTarget.style, navLinkButtonStyle[':hover'])}
                 onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: navLinkButtonStyle.backgroundColor, transform: 'none' })}
@@ -261,18 +255,18 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
                 Login
               </button>
             </>
-          ) : ( // If logged in (token exists), show specific links and Logout
+          ) : (
             <>
-              {/* Conditional Volunteer links */}
+             
               {userRole === 'volunteer' && (
                 <div style={dropdownContainerStyle} ref={volunteerDropdownRef}>
                   <button
                     onClick={toggleVolunteerDropdown}
-                    style={navLinkButtonStyle} // Use navLinkButtonStyle for the main dropdown button
+                    style={navLinkButtonStyle} 
                     onMouseEnter={e => Object.assign(e.currentTarget.style, navLinkButtonStyle[':hover'])}
                     onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: navLinkButtonStyle.backgroundColor, transform: 'none' })}
                   >
-                    Volunteer &#9662; {/* Down arrow */}
+                    Volunteer &#9662;
                   </button>
                   {showVolunteerDropdown && (
                     <div style={dropdownMenuStyle}>
@@ -305,16 +299,16 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
                 </div>
               )}
 
-              {/* NEW: Conditional Help Seeker links */}
+             
               {userRole === 'help_seeker' && (
                 <div style={dropdownContainerStyle} ref={helpSeekerDropdownRef}>
                   <button
                     onClick={toggleHelpSeekerDropdown}
-                    style={navLinkButtonStyle} // Use navLinkButtonStyle for the main dropdown button
+                    style={navLinkButtonStyle}
                     onMouseEnter={e => Object.assign(e.currentTarget.style, navLinkButtonStyle[':hover'])}
                     onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: navLinkButtonStyle.backgroundColor, transform: 'none' })}
                   >
-                    Help Seeker &#9662; {/* Down arrow */}
+                    Help Seeker &#9662; 
                   </button>
                   {showHelpSeekerDropdown && (
                     <div style={dropdownMenuStyle}>
@@ -349,7 +343,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
 
               {userRole === 'admin' && (
                 <button
-                  onClick={() => setCurrentPage('admin-dashboard')} // Placeholder for Admin Dashboard
+                  onClick={() => setCurrentPage('admin-dashboard')}
                   style={navLinkButtonStyle}
                   onMouseEnter={e => Object.assign(e.currentTarget.style, navLinkButtonStyle[':hover'])}
                   onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: navLinkButtonStyle.backgroundColor, transform: 'none' })}
@@ -358,7 +352,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
                 </button>
               )}
               
-              {/* Profile Icon and Dropdown */}
+              
               <div style={dropdownContainerStyle} ref={profileDropdownRef}>
                 <button
                   onClick={toggleProfileDropdown}
@@ -366,7 +360,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
                   onMouseEnter={e => Object.assign(e.currentTarget.style, profileIconButtonStyle[':hover'])}
                   onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: profileIconButtonStyle.backgroundColor })}
                 >
-                  👤 {/* Profile icon (using an emoji as a simple placeholder) */}
+                  👤
                 </button>
 
                 {showProfileDropdown && (
@@ -375,7 +369,7 @@ const Navbar = ({ setCurrentPage, token, userRole, userName, onLogout, onOpenReg
                       {userName} ({userRole})
                     </span>
                     <button
-                      onClick={() => { onLogout(); setShowProfileDropdown(false); }} // Call logout and close dropdown
+                      onClick={() => { onLogout(); setShowProfileDropdown(false); }} 
                       style={logoutButtonStyle}
                       onMouseEnter={e => Object.assign(e.currentTarget.style, logoutButtonStyle[':hover'])}
                       onMouseLeave={e => Object.assign(e.currentTarget.style, { backgroundColor: logoutButtonStyle.backgroundColor, transform: 'none' })}
