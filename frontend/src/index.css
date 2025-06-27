@@ -1,0 +1,31 @@
+/* frontend/src/index.css
+ * This file is where you typically include your global CSS,
+ * and importantly, the Tailwind CSS directives.
+ * UPDATED: Increased base font size for the entire webpage.
+ */
+
+/* Tailwind CSS directives */
+/* These directives are processed by Tailwind CSS to generate all the utility classes */
+@tailwind base;    /* Basic styles, resets, etc. */
+@tailwind components; /* Component-specific classes you might define */
+@tailwind utilities; /* All the utility classes like bg-blue-500, p-4, flex, etc. */
+
+/* Optional: Add custom fonts or other global styles here */
+
+/* Set a larger base font size for the entire document */
+html {
+  font-size: 112.5%; /* This sets 1rem to 18px if default browser font size is 16px */
+}
+
+body {
+  font-family: 'Inter', sans-serif; /* Using 'Inter' as requested for fonts */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem; /* Ensures body inherits the new base font size from html */
+}
+
+/* You can add any other global styles here */
+
